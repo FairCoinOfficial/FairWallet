@@ -1,4 +1,4 @@
-# FairWallet
+# FAIRWallet
 
 The FAIRWallet is a secure wallet platform for both desktop and mobile devices.
 
@@ -11,7 +11,7 @@ For a list of frequently asked questions please visit the [FairWallet Support](h
 - Device-based security: all private keys are stored locally, not in the cloud
 - Support for FairCoin testnet wallets
 - Support for over 150 currency pricing options and unit denomination in FAIR
-- Push notifications (only available for ios and android versions)
+- Push notifications (only available for iOS and android versions)
 - Customizable wallet naming
 - Multiple languages supported
 - Available for iOS, [Android](https://play.google.com/store/apps/details?id=in.fairco.wallet) devices
