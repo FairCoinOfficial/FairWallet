@@ -1,53 +1,15 @@
 import axios from 'axios';
+import * as bitcoin from "bitcoinjs-lib";
+const faircoinNet = {
+    messagePrefix: "\x18Faircoin Signed Message:\n",
+    bech32: "tb",
+    bip32: { public: 70617039, private: 70615956 },
+    pubKeyHash: 0x23,
+    scriptHash: 0xc4,
+    wif: 0xd4,
+};
 const faircoinExplorer = 'https://blockchain.fairco.in/';
 const faircoinBackend = 'http://27.0.175.48:3000/api/';
-/**
- * fetch the wallet information
- *
- * @param address   string  wallet address
- * @returns {object}        wallet information
- */
-const getInfo = async (address) => {
-    const data = await axios.post(`${faircoinExplorer}address/${address}`);
-    return data.data;
-}
-/**
- * fetch the unspent transaction output information
- *
- * @param address   string  wallet address
- * @returns [{object}]      array of unspent transactions
- */
-const getUtxo = async (address) => {
-    let lastTx = [];
-    try{
-        const data = await axios.get(`${faircoinExplorer}ext/getaddress/${address}`);
-        lastTx = data.data.last_txs;
-    }catch(e){
-        // console.log(e)
-        lastTx = [];
-    }
-    let TxData = [];
-    for(let i = 0; i < lastTx.length; i++){
-        if(lastTx[i].type!='vout') continue;
-        TxData.push({
-            "tx":lastTx[i].addresses,
-            "id":0,
-        });
-    }
-    return TxData;
-}
-
-const getLastTx = async (address) => {
-    let lastTx = [];
-    try{
-        const data = await axios.get(`${faircoinExplorer}ext/getaddress/${address}`);
-        lastTx = data.data.last_txs;
-    }catch(e){
-        // console.log(e)
-        lastTx = [];
-    }
-    return lastTx;
-}
 /**
  * fetch the transaction information
  *
@@ -55,20 +17,62 @@ const getLastTx = async (address) => {
  * @returns string      transaction information in hex or as binary data.
  */
 const pushTx = async (data) => {
-    const result = await axios.post(`${faircoinBackend}pushtx`, data);
-    return result.data;
+    try {
+        const {lastTxs, address, receivers, prvKey} = data;
+        // console.log('lastTxs',lastTxs);
+        // console.log('address',address);
+        // console.log('receivers',receivers);
+        // console.log('prvKey',prvKey);
+        const key = bitcoin.ECPair.fromWIF(prvKey, faircoinNet);
+        const psbt = new bitcoin.Psbt({ network: faircoinNet });
+    
+        psbt.setVersion(1);
+        psbt.setLocktime(0);
+    
+        const utxosRes = await axios.post(`${faircoinBackend}getUtxos`, {addr:address, txIds:lastTxs});
+        const utxos = utxosRes.data.data;
+        for (var i = 0; i < utxos.length; i++) {
+          utxo = utxos[i];
+          const prevTxDataRes = await axios.post(`${faircoinBackend}getRawTransaction`, {txId:utxo.tx});
+          const prevTxData = prevTxDataRes.data.data;
+          if (prevTxData === false || prevTxData === "") {
+            throw new Error('Failed to get txData');
+          }
+          psbt.addInput({
+            hash: utxo.tx,
+            index: utxo.id,
+            sequence: 0xffffffff,
+            nonWitnessUtxo: Buffer.from(prevTxData, "hex"),
+          });
+        }
+    
+        for (i = 0; i < receivers.length; i++) {
+          const receiver = receivers[i];
+          psbt.addOutput({
+            address: receiver.address,
+            value: receiver.value,
+          });
+        }
+        psbt.signAllInputs(key);
+    
+        psbt.finalizeAllInputs();
+    
+        const txData = psbt.extractTransaction(true).toHex();    
+        console.log('txData',txData);
+        const newTransaction = (await axios.post(`${faircoinBackend}pushtx`, {txData})).data.data;
+        console.log('txid',newTransaction)
+        return newTransaction;
+      } 
+      catch (error) {
+        console.log(error);
+        throw new Error('Failed');
+      }
 }
-
-/**
- * Get transaction history for the specified address/scripthash, sorted with newest first.
- *
- * @param address            string  wallet address
- * @returns [{object}]      transactions
- */
-const getTransactions = async (address, last_seen_txid) => {
+const getTransactions = async (address) => {
     try {
         const result = await axios.get(`${faircoinExplorer}ext/getaddress/${address}`);
-        return result.data.last_txs;
+        if(result.data.error) return []
+        else return result.data.last_txs;
     } catch (error) {
         return [];
     }
@@ -77,17 +81,25 @@ const balance = async (address) => {
     try{
         const result = await axios.get(`${faircoinExplorer}ext/getbalance/${address}`);
         if(result.data.error) return 0;
-        else return Math.floor(Number(result.data).toFixed(2) * 100)/100;
+        else return result.data;
     }catch(e){
         return 0;
     }
 }
+
+const getTxInfo = async (tx) => {
+    try{
+        const result = await axios.get(`${faircoinExplorer}ext/gettx/${tx}`);
+        if(result.data.error) return false;
+        else return result.data;
+    }catch(e){
+        return false;
+    }
+}
 const BitcoinService = {
-    getInfo,
-    getUtxo,
-    getLastTx,
     pushTx,
     getTransactions,
     balance,
+    getTxInfo,
 }
 export default BitcoinService;

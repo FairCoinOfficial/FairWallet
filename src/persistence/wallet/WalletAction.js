@@ -23,7 +23,9 @@ function listForBalance(params) {
         for (let i = 0; i < wallets.length; i++) {
             if (wallets[i].address !== 'NONE') {
                 const balance = await WalletService.balance(wallets[i].address);
+                const latestTransaction = await WalletService.latestTransaction(wallets[i].address);
                 wallets[i].balance = balance;
+                wallets[i].latestTransaction = latestTransaction;
             }
         }
         dispatch(loadSuccess(wallets));
@@ -43,10 +45,13 @@ function list(params) {
         for (let i = 0; i < wallets.length; i++) {
             if (wallets[i].address !== 'NONE') {
                 const balance = await WalletService.balance(wallets[i].address);
+                const latestTransaction = await WalletService.latestTransaction(wallets[i].address);
                 wallets[i].balance = balance;
+                wallets[i].latestTransaction = latestTransaction;
+                // console.log('latesteTransaction',latestTransaction)
             }
             if (address == wallets[i].address) {
-                activeWallet = wallets[i];
+                activeWallet = wallets[i]; 
             }
         }
         dispatch(loadSuccess(wallets));

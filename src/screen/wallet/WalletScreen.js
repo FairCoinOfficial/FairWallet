@@ -24,7 +24,7 @@ export default function WalletScreen({navigation}) {
     const dispatch = useDispatch();
     useEffect(async () => {
         dispatch(WalletAction.list({network: activeNetwork}));
-        // refreshBalance();
+        refreshBalance();
     }, []);
     const onRefresh = () => {
         dispatch(WalletAction.list({network: activeNetwork}));
@@ -50,8 +50,8 @@ export default function WalletScreen({navigation}) {
                     </View>
                     <View style={styles.walletLatestTransaction}>
                         <LMText style={styles.latestTransactionLabel}>{language.latestTransaction}</LMText>
-                        <LMText style={styles.latestTransaction}>{item.latestTransaction == '' ? language.noData : item.latestTransaction}</LMText>
-                    </View>
+                        <LMText style={styles.latestTransaction}>{item.latestTransaction?item.latestTransaction:'No transaction'}</LMText>
+                    </View>                                            
 
                     <LMImage source={require('../../../assets/img/btc-shape.png')} style={styles.image}/>
                 </LinearGradient>
@@ -91,8 +91,8 @@ export default function WalletScreen({navigation}) {
             });
         }
         while(1){
-            dispatch(WalletAction.list({network: activeNetwork}));
             await sleep(2000);
+            dispatch(WalletAction.list({network: activeNetwork}));
         }
     }
  

@@ -1,4 +1,3 @@
-import BitcoinWallet from '../../module/bitcoin/BitcoinWallet';
 import BitcoinService from '../../module/bitcoin/BitcoinService';
 import BitcoinUtil from '../../module/bitcoin/BitcoinUtil';
 import {LMStorageService, STORAGE_KEYS} from '../storage/LMStorageService';
@@ -51,7 +50,7 @@ const importWallet = async (params) => {
  */
 const balance = async (address) => {
     const currentBalance = await BitcoinService.balance(address);
-    return currentBalance;
+    return Math.floor(Number(currentBalance).toFixed(2) * 100)/100;
 }
 /**
  * get latestTransaction
@@ -60,8 +59,16 @@ const balance = async (address) => {
  * @returns {object}        wallet information
  */
 const latestTransaction = async (address) => {
-    //This is from old wallet function. Check and delete if dont used
-    return '';
+    const txList = await BitcoinService.getTransactions(address);
+    if(txList.length>0){
+        const lastTx = txList[0].addresses;
+        const txInfo = await BitcoinService.getTxInfo(lastTx);
+        if(!txInfo) return 'No transaction';
+        const timestamp = txInfo.tx.timestamp;
+        const diff = moment(new Date(timestamp*1000)).fromNow();
+        return diff;
+    };
+    return 'No transaction';
 }
 /**
  * send
@@ -72,7 +79,7 @@ const latestTransaction = async (address) => {
  const send = async (params) => {
     let {wif, address, toAddress, amount, fee} = params;
     console.log('send params',wif, address, toAddress, amount, fee)
-    const lastTxs = await BitcoinService.getLastTx(address);
+    const lastTxs = await BitcoinService.getTransactions(address);
     const withdrawAmount = BitcoinUtil.toSatoshi(amount);
     const currentBalance = await BitcoinService.balance(address);
     const changeAmount = BitcoinUtil.toSatoshi(currentBalance - amount - fee);
@@ -90,8 +97,8 @@ const latestTransaction = async (address) => {
             ],
             prvKey:wif
         });
-    console.log('pushTxResult',pushTxRes.data);
-    return pushTxRes.data.data;
+    console.log('pushTxResult',pushTxRes);
+    return pushTxRes;
 }
 /**
  * estimateFee
@@ -118,7 +125,7 @@ const estimateFee = async () => {
  * @returns {object}        wallet information
  */
 const transactions = async (address, last_seen_txid) => {
-    const txList = await BitcoinService.getTransactions(address, last_seen_txid);
+    const txList = await BitcoinService.getTransactions(address);
     return txList;
 }
 /**

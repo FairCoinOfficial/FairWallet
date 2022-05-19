@@ -15,3 +15,16 @@ For a list of frequently asked questions please visit the [FairWallet Support](h
 - Customizable wallet naming
 - Multiple languages supported
 - Available for iOS, [Android](https://play.google.com/store/apps/details?id=in.fairco.wallet) devices
+
+## Environment(DEV)
+
+- Nodejs(>14.0.0)
+- Android
+
+## Pages
+
+- Wallet screen
+- Wallet detail screen (transaction lists)
+- Import/Create wallet screen
+- Send screen
+- Receive screen
