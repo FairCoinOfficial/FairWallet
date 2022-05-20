@@ -46,7 +46,7 @@ export default function WalletScreen({navigation}) {
                 <LinearGradient colors={[Theme.colors.foregroundColor, Theme.colors.foregroundColor]} style={[styles.itemBg, {width: 330}]}>
                     <View style={styles.walletBalance}>
                         <LMText style={styles.walletName}>{item.name}</LMText>
-                        <LMText style={styles.walletBalanceLabel}>{item.balance} ⊜</LMText>
+                        <LMText style={styles.walletBalanceLabel}>{item.balance}⊜</LMText>
                     </View>
                     <View style={styles.walletLatestTransaction}>
                         <LMText style={styles.latestTransactionLabel}>{language.latestTransaction}</LMText>

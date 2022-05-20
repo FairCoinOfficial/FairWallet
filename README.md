@@ -18,7 +18,7 @@ For a list of frequently asked questions please visit the [FairWallet Support](h
 
 ## Environment(DEV)
 
-- Nodejs(>14.0.0)
+- Nodejs(14.0.0)
 - Android
 
 ## Pages
