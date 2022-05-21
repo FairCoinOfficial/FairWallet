@@ -151,6 +151,7 @@ export const en = {
     wallet : 'Wallet',
     swap : 'Swap',
     contact : 'Contact',
+    setting : 'Setting',
     add : 'Add',
     assets : 'Assets',
     addWallet : 'Add wallet',

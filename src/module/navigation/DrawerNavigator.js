@@ -82,6 +82,16 @@ const DrawerContent = ({navigation}) => {
                     </View>
                 </LMTouchableOpacity>
                 <LMTouchableOpacity style={styles.menuItem} onPress={() => {
+                    navigation.navigate("SettingScreen");
+                }}>
+                    <View style={styles.menuTitle}>
+                        <LMText>{language.setting}</LMText>
+                    </View>
+                    <View style={styles.menuIcon}>
+                        <ChevronRight/>
+                    </View>
+                </LMTouchableOpacity>
+                <LMTouchableOpacity style={styles.menuItem} onPress={() => {
                     navigation.navigate("MarketplaceScreen");
                 }}>
                     <View style={styles.menuTitle}>

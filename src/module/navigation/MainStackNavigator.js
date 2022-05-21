@@ -18,7 +18,7 @@ import UpdateContactScreen from '../../screen/contact/UpdateContactScreen';
 import MarketplaceScreen from '../../screen/marketplace/MarketplaceScreen';
 import WalletInformationScreen from '../../screen/wallet/WalletInformationScreen';
 import WifScreen from '../../screen/wallet/WifScreen';
-
+import SettingScreen from '../../screen/setting/Setting';
 const Stack = createStackNavigator();
 
 function MainStackNavigator({style}) {
@@ -72,6 +72,10 @@ function MainStackNavigator({style}) {
                 <Stack.Screen
                     name="ContactScreen"
                     component={ContactScreen}
+                />
+                  <Stack.Screen
+                    name="SettingScreen"
+                    component={SettingScreen}
                 />
                 <Stack.Screen
                     name="SearchContactScreen"
