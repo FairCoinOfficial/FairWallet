@@ -13,22 +13,29 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function SettingScreen({navigation}) {
     const [isEnabled, setIsEnabled] = useState(false);
+    const {language} = useSelector(state => state.LanguageReducer);
+
+
+
+
+
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <SafeAreaView style={styles.container}>
         <ScrollView>
         <View style={styles.header}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>{
+                        navigation.openDrawer()}}>
             <Image
             style={styles.Image}
             source={require('../../../assets/img/back.png')}
             />
             </TouchableOpacity>
-            <Text style={{paddingLeft:20,fontSize:18}}>Settings</Text>
+            <Text style={{paddingLeft:20,fontSize:18}}>{language.setting}</Text>
         </View>
         <View style={styles.horizontalline}/>
             <View style={styles.MainView}>
-                <Text style={{color:'#818386'}}>Appearance</Text>
+                <Text style={{color:'#818386'}}>{language.appearance}</Text>
                 <View style={styles.subView}>
                         <View style={styles.childView}>
                                         <Image
@@ -36,8 +43,8 @@ export default function SettingScreen({navigation}) {
                             source={require('../../../assets/img/theme.png')}
                             />
                             <View style={styles.childView1}>
-                                <Text style={{fontSize:16,fontWeight:'900'}}>Theme</Text>
-                                <Text style={{color:'#A4A7A8'}}>dark mode</Text>
+                                <Text style={{fontSize:16,fontWeight:'900'}}>{language.theme}</Text>
+                                <Text style={{color:'#A4A7A8'}}>{language.darkMode}</Text>
 
                             </View>
                         </View>
@@ -47,12 +54,16 @@ export default function SettingScreen({navigation}) {
                             source={require('../../../assets/img/world.png')}
                             />
                             <View style={styles.childView1}>
-                                <Text style={{fontSize:16,fontWeight:'900'}}>Language</Text>
-                               
+                            <TouchableOpacity  onPress={() => {
+                    navigation.navigate("ChangeLanguage");
+                }}>
+                                <Text style={{fontSize:16,fontWeight:'900'}}>{language.abc}
+                </Text>
+                              </TouchableOpacity>
                             </View>
                         </View>
                 </View>
-                <Text style={{color:'#818386'}}>Security</Text>
+                <Text style={{color:'#818386'}}>language.security</Text>
                 <View style={styles.subView}>
                         <View style={styles.childView}>
                                         <Image
@@ -60,8 +71,8 @@ export default function SettingScreen({navigation}) {
                             source={require('../../../assets/img/passcode.png')}
                             />
                             <View style={styles.childView1}>
-                                <Text style={{fontSize:14,fontWeight:'900'}}>Change passcode</Text>
-                                <Text style={{color:'#A4A7A8'}}>pin</Text>
+                                <Text style={{fontSize:14,fontWeight:'900'}}>{language.changePasscode}</Text>
+                                <Text style={{color:'#A4A7A8'}}>{language.pin}</Text>
                             </View>
                         </View>
                       
@@ -73,9 +84,9 @@ export default function SettingScreen({navigation}) {
                             source={require('../../../assets/img/finger.png')}
                             /> 
                             <View>
-                            <Text style={{paddingLeft:20}}>Use fingerprint</Text>
+                            <Text style={{paddingLeft:20}}>{language.useFingerprint}</Text>
                             <Text style={{fontSize:10,paddingLeft:20,color:'#A4A7A8'}}>
-                               Toggle
+                               {language.toggle}
                             </Text>
                             </View>
                             </View>
@@ -91,7 +102,7 @@ export default function SettingScreen({navigation}) {
                 </View>
 
 
-                <Text style={{color:'#818386'}}>About</Text>
+                <Text style={{color:'#818386'}}>{language.about}</Text>
                 <View style={styles.subView1}>
                 <View style={styles.childView}>
                                         <Image
@@ -99,7 +110,7 @@ export default function SettingScreen({navigation}) {
                             source={require('../../../assets/img/rate.png')}
                             />
                             <View style={styles.childView1}>
-                                <Text style={{fontSize:16,fontWeight:'900'}}>Rate us on Google Play/App Store</Text>
+                                <Text style={{fontSize:16,fontWeight:'900'}}>{language.rate}</Text>
                                
                             </View>
                         </View>
@@ -109,7 +120,7 @@ export default function SettingScreen({navigation}) {
                             source={require('../../../assets/img/close.png')}
                             />
                             <View style={styles.childView1}>
-                                <Text style={{fontSize:16,fontWeight:'900'}}>App information</Text>
+                                <Text style={{fontSize:16,fontWeight:'900'}}>{language.appInfo}</Text>
                                
                             </View>
                         </View>
@@ -119,7 +130,7 @@ export default function SettingScreen({navigation}) {
                             source={require('../../../assets/img/close.png')}
                             />
                             <View style={styles.childView1}>
-                                <Text style={{fontSize:16,fontWeight:'900'}}>Follow us on Twitter</Text>
+                                <Text style={{fontSize:16,fontWeight:'900'}}>{language.followTwiter}</Text>
                                
                             </View>
                         </View>
@@ -129,7 +140,7 @@ export default function SettingScreen({navigation}) {
                             source={require('../../../assets/img/close.png')}
                             />
                             <View style={styles.childView1}>
-                                <Text style={{fontSize:16,fontWeight:'900'}}>Like us on Facebook</Text>
+                                <Text style={{fontSize:16,fontWeight:'900'}}>{language.likeFb}</Text>
                                
                             </View>
                         </View>

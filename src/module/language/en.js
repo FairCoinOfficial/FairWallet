@@ -1,5 +1,21 @@
 export const en = {
+    appearance : 'Appearance',
+    darkMode : 'dark mode',
+    security: 'Security',
+    changePasscode : 'Change passcode',
+    pin : 'Pin',
+    useFingerprint : 'Use fingerprint',
+    toggle : 'Toggle',
+    theme : 'Theme',
+    about : 'About',
     personal : 'Personal',
+    followTwiter : 'Follow us on Twitter',
+    likeFb : 'Like us on Facebook',
+
+    rate : 'Rate us on Google Play/App Store',
+    appInfo : 'App information',
+    abc : 'Language',
+
     privacyAndSecurity : 'Privacy & Security',
     network : 'Network',
     help : 'Help',
