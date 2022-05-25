@@ -46,6 +46,8 @@ export default function ChangeLanguage({navigation}) {
                 {languages.map((item)=>
                     <TouchableOpacity
                     onPress={()=>{dispatch(LanguageAction.set(item.code)).then(() => {
+                        console.log("theme mode set==lag>",item)
+
                         dispatch(LanguageAction.setDefault(item));
                         navigation.navigate("SettingScreen");
                     });}}
