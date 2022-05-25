@@ -43,7 +43,7 @@ export const dark = {
     feeLabel: '#d2f8d6',
     feeValue: '#ddff55',
     feeActive: '#d2f8d6',
-    labelText: '#81868e',
+    labelText: '#FFFFFF',
     cta2: '#062453',
     outputValue: '#13244D',
     elevated: '#f3f4ef',

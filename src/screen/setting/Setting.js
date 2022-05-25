@@ -42,22 +42,17 @@ export default function SettingScreen({ navigation }) {
                                 source={require('../../../assets/img/theme.png')}
                             />
                             <View style={styles.childView1}>
-                                {
-                                    themes.map((item,index)=>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            dispatch(ThemeAction.set(item.mode)).then(() => {
-                                                dispatch(ThemeAction.setDefault(item));
-                                            });
-                                        }}
-
+                              
+                                    <TouchableOpacity 
+                                    onPress={() => {
+                                        navigation.navigate("ChangeTheme");
+                                    }}
                                     >
                                         <Text style={{ fontSize: 16, fontWeight: '900' }}>{language.theme}</Text>
                                         <Text style={{ color: '#A4A7A8' }}>{language.darkMode}</Text>
                                     </TouchableOpacity>
-                                    )
-                                }
-
+                                    
+                                
                             </View>
                         </View>
                         <View style={styles.childView}>

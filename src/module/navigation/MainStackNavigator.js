@@ -20,6 +20,7 @@ import WalletInformationScreen from '../../screen/wallet/WalletInformationScreen
 import WifScreen from '../../screen/wallet/WifScreen';
 import SettingScreen from '../../screen/setting/Setting';
 import ChangeLanguage from '../../screen/setting/changeLanguage';
+import ChangeTheme from '../../screen/setting/changeTheme';
 const Stack = createStackNavigator();
 
 function MainStackNavigator({style}) {
@@ -82,6 +83,12 @@ function MainStackNavigator({style}) {
                     name="ChangeLanguage"
                     component={ChangeLanguage}
                 />
+
+                <Stack.Screen
+                    name="ChangeTheme"
+                    component={ChangeTheme}
+                />
+
                 <Stack.Screen
                     name="SearchContactScreen"
                     component={SearchContactScreen}
