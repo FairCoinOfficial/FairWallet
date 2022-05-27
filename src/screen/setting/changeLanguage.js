@@ -14,7 +14,6 @@ import Flag from 'react-native-flags-typescript';
 import {LanguageAction} from '../../persistence/language/LanguageAction';
 
 
-
 export default function ChangeLanguage({navigation}) {
     const dispatch = useDispatch();
     const [isEnabled, setIsEnabled] = useState(false);

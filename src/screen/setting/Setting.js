@@ -30,7 +30,7 @@ export default function SettingScreen({ navigation }) {
                             source={require('../../../assets/img/back.png')}
                         />
                     </TouchableOpacity>
-                    <Text style={{ paddingLeft: 20, fontSize: 18 }}>{language.setting}</Text>
+                    <Text style={{paddingLeft: 20, fontSize: 18 }}>{language.setting}</Text>
                 </View>
                 <View style={styles.horizontalline} />
                 <View style={styles.MainView}>

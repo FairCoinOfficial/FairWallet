@@ -26,7 +26,6 @@ export default function ChangeTheme({navigation}) {
     dispatch(LanguageAction.set(item.code)).then(() => {
         dispatch(LanguageAction.setDefault(item));
     });
-
 };
 
 const toggleSwitch = () => setIsEnabled(previousState => !previousState);

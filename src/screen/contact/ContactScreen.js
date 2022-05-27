@@ -8,11 +8,15 @@ import {useDispatch, useSelector} from 'react-redux';
 import _ from 'lodash';
 import UserAvatar from 'react-native-user-avatar';
 import LMButton from '../../component/common/LMButton';
+import { ThemeAction } from '../../persistence/setting/ThemeAction';
+
 
 export default function ContactScreen({navigation}) {
     const {contacts} = useSelector(state => state.ContactReducer);
     const {language} = useSelector(state => state.LanguageReducer);
     const dispatch = useDispatch();
+    const { theme, themes, defaulttheme } = useSelector(state => state.ThemeReducer);
+
     useEffect(async () => {
 
     }, []);
@@ -20,9 +24,9 @@ export default function ContactScreen({navigation}) {
 
     };
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
             <View style={styles.header}>
-                <LMText style={styles.headerTitle}>{language.contact}</LMText>
+                <LMText style={[styles.headerTitle,{color:theme.labelText}]}>{language.contact}</LMText>
                 <LMTouchableOpacity style={styles.drawer} onPress={() => {
                     navigation.goBack();
                 }}>
