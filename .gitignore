@@ -33,7 +33,6 @@ local.properties
 #
 node_modules/
 npm-debug.log
-yarn-error.log
 
 # BUCK
 buck-out/
@@ -57,3 +56,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# npm
+package-lock.json
