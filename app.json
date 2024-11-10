@@ -1,4 +1,8 @@
 {
   "name": "FAIRWallet",
-  "displayName": "FAIRWallet"
+  "displayName": "FAIRWallet",
+  "expo": {
+    "sdkVersion": "42.0.0",
+    "platforms": ["ios", "android"]
+  }
 }

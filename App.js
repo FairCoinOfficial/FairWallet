@@ -7,6 +7,8 @@ import LMLoading from './src/component/common/LMLoading';
 import RootStore from './src/module/redux/RootStore';
 import ApplicationNavigator from './src/module/navigation/ApplicationNavigator';
 import LMSelect from './src/component/common/LMSelect';
+import { AppLoading } from 'expo'; // Import AppLoading from expo
+
 enableScreens();
 LogBox.ignoreLogs(['Warning: Cannot']);
 LogBox.ignoreLogs(['component']);
@@ -20,12 +22,13 @@ LogBox.ignoreLogs(['formState.isValid']);
 
 export default function App() {
     return (
-        <Provider store={RootStore}>
-            <StatusBar hidden={false} backgroundColor={'#ffff'} barStyle={'dark-content'}/>
-            <ApplicationNavigator/>
-            <LMLoading ref={(ref) => LMLoading.setRef(ref)}/>
-            <LMSelect ref={(ref) => LMSelect.setRef(ref)}/>
-        </Provider>
+        <AppLoading> {/* Wrap the Provider component with AppLoading */}
+            <Provider store={RootStore}>
+                <StatusBar hidden={false} backgroundColor={'#ffff'} barStyle={'dark-content'}/>
+                <ApplicationNavigator/>
+                <LMLoading ref={(ref) => LMLoading.setRef(ref)}/>
+                <LMSelect ref={(ref) => LMSelect.setRef(ref)}/>
+            </Provider>
+        </AppLoading>
     );
 };
-
