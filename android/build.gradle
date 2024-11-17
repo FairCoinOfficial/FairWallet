@@ -4,8 +4,8 @@ buildscript {
     ext {
         buildToolsVersion = "29.0.3"
         minSdkVersion = 21
-        compileSdkVersion = 29
-        targetSdkVersion = 29
+        compileSdkVersion = 31
+        targetSdkVersion = 31
         ndkVersion = "23.0.7344513"
     }
     repositories {
@@ -36,3 +36,4 @@ allprojects {
         maven { url 'https://www.jitpack.io' }
     }
 }
+repositories { mavenCentral() }
