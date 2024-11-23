@@ -1,31 +1,57 @@
 buildscript {
     ext {
-        buildToolsVersion = "31.0.0"
+        buildToolsVersion = "33.0.0"
         minSdkVersion = 21
-        compileSdkVersion = 31
-        targetSdkVersion = 31
-        ndkVersion = "23.0.7344513"
+        compileSdkVersion = 33
+        targetSdkVersion = 33
+        kotlinVersion = '1.9.0'
+        ndkVersion = "25.1.8937393"
+        hermesEnabled = false // Set this to true if you want to use Hermes
     }
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.2")
+        classpath 'com.android.tools.build:gradle:8.1.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
+}
+
+plugins {
+    id 'com.android.application' version '8.1.3' apply false
+    id 'com.android.library' version '8.1.3' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
 }
 
 allprojects {
     repositories {
+        google()
+        mavenCentral()
         mavenLocal()
         maven {
-            url("$rootDir/../node_modules/react-native/android")
+            url "$rootDir/../node_modules/react-native/android"
         }
         maven {
-            url("$rootDir/../node_modules/jsc-android/dist")
+            url "$rootDir/../node_modules/jsc-android/dist"
         }
-        google()
-        jcenter()
-        maven { url 'https://www.jitpack.io' }
+    }
+}
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            android {
+                compileSdkVersion rootProject.ext.compileSdkVersion
+                buildToolsVersion rootProject.ext.buildToolsVersion
+                defaultConfig {
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                }
+                if (!project.hasProperty('namespace')) {
+                    namespace project.group
+                }
+            }
+        }
     }
 }
